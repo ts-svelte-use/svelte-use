@@ -1,0 +1,51 @@
+{
+	"name": "@ts-svelte-use/__template__",
+	"version": "0.0.1",
+	"private": false,
+	"scripts": {
+		"dev": "vite dev --config ../../vite.config.mts --port 8081 --open --clearScreen",
+		"build": "vite build --config ../../vite.config.mts && npm run prepack",
+		"preview": "vite preview --config ../../vite.config.mts",
+		"prepare": "svelte-kit sync || echo ''",
+		"prepack": "svelte-kit sync && svelte-package && publint",
+		"check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
+		"check:watch": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json --watch",
+		"format": "prettier --write .",
+		"lint": "prettier --check . && eslint .",
+		"test:unit": "vitest",
+		"test": "npm run test:unit -- --run"
+	},
+	"files": [
+		"dist",
+		"!dist/**/*.test.*",
+		"!dist/**/*.spec.*"
+	],
+	"sideEffects": [
+		"**/*.css"
+	],
+	"svelte": "./dist/index.js",
+	"types": "./dist/index.d.ts",
+	"type": "module",
+	"exports": {
+		".": {
+			"types": "./dist/index.d.ts",
+			"svelte": "./dist/index.js"
+		}
+	},
+	"peerDependencies": {
+		"svelte": "^5.0.0"
+	},
+	"keywords": [
+		"svelte"
+	],
+	"author": "MohamedElmdary <engm5081@gmail.com>",
+	"license": "MIT",
+	"bugs": {
+		"url": "https://github.com/ts-svelte-use/svelte-use/issues"
+	},
+	"homepage": "https://github.com/ts-svelte-use/svelte-use#readme",
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/ts-svelte-use/svelte-use.git"
+	}
+}
