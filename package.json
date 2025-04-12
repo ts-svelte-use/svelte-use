@@ -19,5 +19,8 @@
   "bugs": {
     "url": "https://github.com/ts-svelte-use/svelte-use/issues"
   },
-  "homepage": "https://github.com/ts-svelte-use/svelte-use#readme"
+  "homepage": "https://github.com/ts-svelte-use/svelte-use#readme",
+  "devDependencies": {
+    "lerna": "^8.2.2"
+  }
 }
