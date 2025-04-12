@@ -4,7 +4,7 @@
 	"scripts": {
 		"build": "lerna run build",
 		"prepare": "lerna run prepare",
-		"test": "learn run test",
+		"test": "lerna run test",
 		"lint-staged": "lint-staged"
 	},
 	"repository": {
