@@ -1,5 +1,5 @@
 <script lang="ts">
-	console.log('example');
+	console.log("example")
 </script>
 
 Example

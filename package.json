@@ -1,33 +1,57 @@
 {
-  "name": "svelte-use",
-  "description": "svelte-use is an easy way to extend svelte features and highly adopted from vueuse",
-  "scripts": {
-    
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/ts-svelte-use/svelte-use.git"
-  },
-  "keywords": [
-    "svelte",
-    "svelte-use",
-    "ts-svelte-use",
-    "svelte-runes",
-    "svelte-hooks",
-    "svelte-helpers"
-  ],
-  "author": "MohamedElmdary <engm5081@gmail.com>",
-  "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/ts-svelte-use/svelte-use/issues"
-  },
-  "homepage": "https://github.com/ts-svelte-use/svelte-use#readme",
-  "devDependencies": {
-    "lerna": "^8.2.2"
-  },
-  "pnpm": {
-    "onlyBuiltDependencies": [
-      "esbuild"
-    ]
-  }
+	"name": "svelte-use",
+	"description": "svelte-use is an easy way to extend svelte features and highly adopted from vueuse",
+	"scripts": {
+		"build": "lerna run build",
+		"prepare": "lerna run prepare",
+		"test": "learn run test"
+	},
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/ts-svelte-use/svelte-use.git"
+	},
+	"keywords": [
+		"svelte",
+		"svelte-use",
+		"ts-svelte-use",
+		"svelte-runes",
+		"svelte-hooks",
+		"svelte-helpers"
+	],
+	"author": "MohamedElmdary <engm5081@gmail.com>",
+	"license": "MIT",
+	"bugs": {
+		"url": "https://github.com/ts-svelte-use/svelte-use/issues"
+	},
+	"homepage": "https://github.com/ts-svelte-use/svelte-use#readme",
+	"devDependencies": {
+		"lerna": "^8.2.2",
+		"@testing-library/svelte": "^5.2.4",
+		"@sveltejs/kit": "^2.16.0",
+		"vite": "^6.2.5",
+		"vitest": "^3.0.0",
+		"jsdom": "^26.0.0",
+		"@sveltejs/adapter-auto": "^4.0.0",
+		"@sveltejs/vite-plugin-svelte": "^5.0.0",
+		"@eslint/compat": "^1.2.5",
+		"@eslint/js": "^9.18.0",
+		"eslint": "^9.18.0",
+		"eslint-config-prettier": "^10.0.1",
+		"eslint-plugin-svelte": "^3.0.0",
+		"globals": "^16.0.0",
+		"@sveltejs/package": "^2.0.0",
+		"@testing-library/jest-dom": "^6.6.3",
+		"prettier": "^3.4.2",
+		"prettier-plugin-svelte": "^3.3.3",
+		"publint": "^0.3.2",
+		"svelte": "^5.0.0",
+		"svelte-check": "^4.0.0",
+		"typescript": "^5.0.0",
+		"typescript-eslint": "^8.20.0"
+	},
+	"pnpm": {
+		"onlyBuiltDependencies": [
+			"esbuild"
+		]
+	}
 }
