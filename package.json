@@ -1,0 +1,23 @@
+{
+  "name": "svelte-use",
+  "description": "svelte-use is an easy way to extend svelte features and highly adopted from vueuse",
+  "scripts": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ts-svelte-use/svelte-use.git"
+  },
+  "keywords": [
+    "svelte",
+    "svelte-use",
+    "ts-svelte-use",
+    "svelte-runes",
+    "svelte-hooks",
+    "svelte-helpers"
+  ],
+  "author": "MohamedElmdary <engm5081@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/ts-svelte-use/svelte-use/issues"
+  },
+  "homepage": "https://github.com/ts-svelte-use/svelte-use#readme"
+}
