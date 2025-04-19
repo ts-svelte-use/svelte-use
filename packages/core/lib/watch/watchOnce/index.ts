@@ -5,7 +5,7 @@ const watchOnce = <T>(
 	callback: (value: T) => void,
 	options: Omit<WatchOptions<T>, "atMost"> = {}
 ) => {
-	return watch(
+	return watch<T>(
 		source,
 		(value) => {
 			callback(value)

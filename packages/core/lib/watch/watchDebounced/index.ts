@@ -12,7 +12,7 @@ const watchDebounced = <T>(
 ) => {
 	const { debounce: wait, maxWait, ...watchOptions } = options
 
-	return watch(source, callback, {
+	return watch<T>(source, callback, {
 		...watchOptions,
 		eventFilter: debounceFilter({ debounce: wait, maxWait })
 	})

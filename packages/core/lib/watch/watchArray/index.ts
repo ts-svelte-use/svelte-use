@@ -13,7 +13,7 @@ export const watchArray = <T extends any[]>(
 	callback: (newList: T, oldList: T, added: T[], removed: T[]) => void,
 	options: WatchOptions<T> = {}
 ) => {
-	return watch(
+	return watch<T>(
 		source,
 		(value, oldValue) => {
 			const _oldValue = oldValue ?? ([] as unknown as T)
