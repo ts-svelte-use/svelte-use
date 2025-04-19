@@ -12,7 +12,7 @@ const createInjectionState = <F extends (...args: any[]) => any>(
 	const key = options?.key ?? Symbol()
 
 	const inject = ((...args: any[]) => {
-		const ctx = fn(...args)
+		const ctx = fn(...args) ?? options?.defaultValue
 		setContext(key, ctx)
 		return ctx
 	}) as F
