@@ -1,5 +1,5 @@
 import { describe, it, expect } from "vitest"
-import { createGlobalState } from "./index.js"
+import { createGlobalState } from "$lib/index.js"
 
 describe("Test createGlobalState", () => {
 	it("Should return same state instance", () => {

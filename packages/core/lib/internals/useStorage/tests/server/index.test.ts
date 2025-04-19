@@ -1,5 +1,5 @@
 import { describe, it, expect, vi, beforeEach } from "vitest"
-import { useStorage } from "./index.svelte.js"
+import { useStorage } from "$lib/internals/index.js"
 
 describe("useStorage", () => {
 	let storage = {
