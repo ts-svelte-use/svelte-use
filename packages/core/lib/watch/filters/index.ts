@@ -1,4 +1,5 @@
-import { debounce } from "lodash-es"
+import debounce from "lodash-es/debounce.js"
+import throttle from "lodash-es/throttle.js"
 
 export interface DebounceFilterOptions {
 	/**
@@ -38,5 +39,31 @@ export const pausableFilter = () => {
 				isActive = true
 			}
 		}
+	}
+}
+
+export interface ThrottleFilterOptions {
+	/**
+	 * The number of milliseconds to delay
+	 */
+	throttle: number
+	/**
+	 * Whether to invoke the function on the leading edge of the timeout
+	 */
+	leading?: boolean
+	/**
+	 * Whether to invoke the function on the trailing edge of the timeout
+	 */
+	trailing?: boolean
+}
+
+export const throttledFilter = <T>(options: ThrottleFilterOptions) => {
+	const { throttle: wait, leading = true, trailing = true } = options
+
+	return {
+		filter: throttle(() => true, wait, { leading, trailing }) as unknown as (
+			value: T,
+			oldValue: T | undefined
+		) => boolean
 	}
 }
