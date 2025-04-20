@@ -14,8 +14,29 @@ export interface DebounceFilterOptions {
 export const debounceFilter = <T>(options: DebounceFilterOptions) => {
 	const { debounce: wait, maxWait } = options
 
-	return debounce(() => true, wait, { maxWait }) as unknown as (
-		value: T,
-		oldValue: T | undefined
-	) => boolean
+	return {
+		filter: debounce(() => true, wait, { maxWait }) as unknown as (
+			value: T,
+			oldValue: T | undefined
+		) => boolean
+	}
+}
+
+export const pausableFilter = () => {
+	let isActive = $state(true)
+
+	return {
+		filter: () => isActive,
+		returns: {
+			get isActive() {
+				return isActive
+			},
+			pause: () => {
+				isActive = false
+			},
+			resume: () => {
+				isActive = true
+			}
+		}
+	}
 }
