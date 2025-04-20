@@ -5,7 +5,7 @@ interface ElementSize {
 	height: number
 }
 
-const useElementSize = (element: HTMLElement) => {
+const useElementSize = (element: () => HTMLElement) => {
 	if (!isBrowser()) {
 		return {
 			get value() {
@@ -16,15 +16,24 @@ const useElementSize = (element: HTMLElement) => {
 
 	let size = $state<ElementSize>({ width: 0, height: 0 })
 
-	const updateSize = () => {
+	const updateSize = (el: HTMLElement) => {
 		size = {
-			width: element.offsetWidth,
-			height: element.offsetHeight
+			width: el.offsetWidth,
+			height: el.offsetHeight
 		}
 	}
 
-	const resizeObserver = new ResizeObserver(updateSize)
-	resizeObserver.observe(element)
+	$effect(() => {
+		const el = element()
+		if (el) {
+			const resizeObserver = new ResizeObserver(() => updateSize(el))
+			resizeObserver.observe(el)
+
+			return () => {
+				resizeObserver.disconnect()
+			}
+		}
+	})
 
 	return {
 		get value() {

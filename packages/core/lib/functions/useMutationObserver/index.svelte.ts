@@ -15,7 +15,7 @@ interface MutationObserverState {
 }
 
 const useMutationObserver = (
-	element: HTMLElement,
+	element: () => HTMLElement,
 	callback: (mutations: MutationRecord[]) => void,
 	options: MutationObserverOptions = {
 		attributes: true,
@@ -29,7 +29,8 @@ const useMutationObserver = (
 				return {
 					records: []
 				}
-			}
+			},
+			stop() {}
 		}
 	}
 
@@ -44,11 +45,23 @@ const useMutationObserver = (
 		callback(mutations)
 	})
 
-	observer.observe(element, options)
+	$effect(() => {
+		const el = element()
+		if (el) {
+			observer.observe(el, options)
+
+			return () => {
+				observer.disconnect()
+			}
+		}
+	})
 
 	return {
 		get value() {
 			return state
+		},
+		stop() {
+			observer.disconnect()
 		}
 	}
 }

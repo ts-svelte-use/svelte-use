@@ -5,7 +5,7 @@ interface ResizeObserverState {
 	height: number
 }
 
-const useResizeObserver = (element: HTMLElement) => {
+const useResizeObserver = (element: () => HTMLElement) => {
 	if (!isBrowser()) {
 		return {
 			get value() {
@@ -13,13 +13,14 @@ const useResizeObserver = (element: HTMLElement) => {
 					width: 0,
 					height: 0
 				}
-			}
+			},
+			stop() {}
 		}
 	}
 
 	let state = $state<ResizeObserverState>({
-		width: element.offsetWidth,
-		height: element.offsetHeight
+		width: 0,
+		height: 0
 	})
 
 	const observer = new ResizeObserver((entries) => {
@@ -31,11 +32,23 @@ const useResizeObserver = (element: HTMLElement) => {
 		}
 	})
 
-	observer.observe(element)
+	$effect(() => {
+		const el = element()
+		if (el) {
+			observer.observe(el)
+
+			return () => {
+				observer.disconnect()
+			}
+		}
+	})
 
 	return {
 		get value() {
 			return state
+		},
+		stop() {
+			observer.disconnect()
 		}
 	}
 }

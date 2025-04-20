@@ -4,7 +4,7 @@ interface ParentElementState {
 	parent: HTMLElement | null
 }
 
-const useParentElement = (element: HTMLElement) => {
+const useParentElement = (element: () => HTMLElement) => {
 	if (!isBrowser()) {
 		return {
 			get value() {
@@ -15,19 +15,26 @@ const useParentElement = (element: HTMLElement) => {
 		}
 	}
 
-	let state = $state<ParentElementState>({
-		parent: element.parentElement
-	})
+	let state = $state<ParentElementState>({ parent: null })
 
-	const observer = new MutationObserver(() => {
-		state = {
-			parent: element.parentElement
+	$effect(() => {
+		const el = element()
+		if (el) {
+			const observer = new MutationObserver(() => {
+				state = {
+					parent: el.parentElement
+				}
+			})
+
+			observer.observe(el, {
+				childList: true,
+				subtree: true
+			})
+
+			return () => {
+				observer.disconnect()
+			}
 		}
-	})
-
-	observer.observe(element, {
-		childList: true,
-		subtree: true
 	})
 
 	return {

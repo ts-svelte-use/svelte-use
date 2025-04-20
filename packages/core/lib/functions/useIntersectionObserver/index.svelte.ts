@@ -17,7 +17,7 @@ interface IntersectionObserverEntry {
 }
 
 const useIntersectionObserver = (
-	element: HTMLElement,
+	element: () => HTMLElement,
 	options: IntersectionObserverOptions = {}
 ) => {
 	if (!isBrowser()) {
@@ -41,7 +41,16 @@ const useIntersectionObserver = (
 		}
 	)
 
-	observer.observe(element)
+	$effect(() => {
+		const el = element()
+		if (el) {
+			observer.observe(el)
+
+			return () => {
+				observer.unobserve(el)
+			}
+		}
+	})
 
 	return {
 		get value() {

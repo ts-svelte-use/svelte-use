@@ -11,7 +11,7 @@ interface ElementBounding {
 	left: number
 }
 
-const useElementBounding = (element: HTMLElement) => {
+const useElementBounding = (element: () => HTMLElement) => {
 	if (!isBrowser()) {
 		return {
 			get value() {
@@ -40,8 +40,8 @@ const useElementBounding = (element: HTMLElement) => {
 		left: 0
 	})
 
-	const updateBounding = () => {
-		const rect = element.getBoundingClientRect()
+	const updateBounding = (el: HTMLElement) => {
+		const rect = el.getBoundingClientRect()
 		bounding = {
 			x: rect.x,
 			y: rect.y,
@@ -54,8 +54,17 @@ const useElementBounding = (element: HTMLElement) => {
 		}
 	}
 
-	const resizeObserver = new ResizeObserver(updateBounding)
-	resizeObserver.observe(element)
+	$effect(() => {
+		const el = element()
+		if (el) {
+			const resizeObserver = new ResizeObserver(() => updateBounding(el))
+			resizeObserver.observe(el)
+
+			return () => {
+				resizeObserver.disconnect()
+			}
+		}
+	})
 
 	return {
 		get value() {

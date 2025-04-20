@@ -7,7 +7,7 @@ interface DropZoneOptions {
 	onDragOver?: (event: DragEvent) => void
 }
 
-const useDropZone = (element: HTMLElement, options: DropZoneOptions = {}) => {
+const useDropZone = (element: () => HTMLElement, options: DropZoneOptions = {}) => {
 	if (!isBrowser()) {
 		return {
 			get value() {
@@ -43,10 +43,22 @@ const useDropZone = (element: HTMLElement, options: DropZoneOptions = {}) => {
 		}
 	}
 
-	element.addEventListener("dragenter", handleDragEnter)
-	element.addEventListener("dragleave", handleDragLeave)
-	element.addEventListener("dragover", handleDragOver)
-	element.addEventListener("drop", handleDrop)
+	$effect(() => {
+		const el = element()
+		if (el) {
+			el.addEventListener("dragenter", handleDragEnter)
+			el.addEventListener("dragleave", handleDragLeave)
+			el.addEventListener("dragover", handleDragOver)
+			el.addEventListener("drop", handleDrop)
+
+			return () => {
+				el.removeEventListener("dragenter", handleDragEnter)
+				el.removeEventListener("dragleave", handleDragLeave)
+				el.removeEventListener("dragover", handleDragOver)
+				el.removeEventListener("drop", handleDrop)
+			}
+		}
+	})
 
 	return {
 		get value() {

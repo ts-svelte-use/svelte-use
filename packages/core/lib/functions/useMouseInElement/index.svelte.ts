@@ -16,7 +16,7 @@ interface MouseInElementState {
 	isOutside: boolean
 }
 
-const useMouseInElement = (element: HTMLElement, options: MouseInElementOptions = {}) => {
+const useMouseInElement = (element: () => HTMLElement, options: MouseInElementOptions = {}) => {
 	if (!isBrowser()) {
 		return {
 			get value() {
@@ -48,7 +48,7 @@ const useMouseInElement = (element: HTMLElement, options: MouseInElementOptions 
 	})
 
 	const updateState = (event: MouseEvent) => {
-		const rect = element.getBoundingClientRect()
+		const rect = element().getBoundingClientRect()
 		const x = event.clientX
 		const y = event.clientY
 		const elementX = x - rect.left
@@ -70,7 +70,16 @@ const useMouseInElement = (element: HTMLElement, options: MouseInElementOptions 
 		}
 	}
 
-	document.addEventListener("mousemove", updateState)
+	$effect(() => {
+		const el = element()
+		if (el) {
+			document.addEventListener("mousemove", updateState)
+
+			return () => {
+				document.removeEventListener("mousemove", updateState)
+			}
+		}
+	})
 
 	return {
 		get value() {

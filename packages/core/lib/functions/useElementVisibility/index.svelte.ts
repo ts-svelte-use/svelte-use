@@ -6,7 +6,10 @@ interface ElementVisibilityOptions {
 	rootMargin?: string
 }
 
-const useElementVisibility = (element: HTMLElement, options: ElementVisibilityOptions = {}) => {
+const useElementVisibility = (
+	element: () => HTMLElement,
+	options: ElementVisibilityOptions = {}
+) => {
 	if (!isBrowser()) {
 		return {
 			get value() {
@@ -28,7 +31,16 @@ const useElementVisibility = (element: HTMLElement, options: ElementVisibilityOp
 		}
 	)
 
-	observer.observe(element)
+	$effect(() => {
+		const el = element()
+		if (el) {
+			observer.observe(el)
+
+			return () => {
+				observer.unobserve(el)
+			}
+		}
+	})
 
 	return {
 		get value() {
